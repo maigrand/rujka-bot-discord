@@ -48,6 +48,7 @@ public class MonitoringMessage {
 
             emb.setTitle(emoteOnline + "  **0/" + maxClients + "**  |  **" + gameTypeField + "**  |  **" + hostName + "**");
             emb.setFooter(footer);
+            emb.setTimestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()));
             message.editMessageEmbeds(emb.build()).queue();
             return;
         }

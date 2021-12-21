@@ -65,6 +65,11 @@ public class MonitoringModule extends DiscordModule {
             monitoringRebuild(event);
             return;
         }
+
+        if (args[0].equals("m/export")) {
+            exportMonitoring(event);
+            return;
+        }
     }
 
     private void monitoringList(GuildMessageReceivedEvent event) {
@@ -89,6 +94,11 @@ public class MonitoringModule extends DiscordModule {
 
     private void monitoringRebuild(GuildMessageReceivedEvent event) {
         RebuildAction action = new RebuildAction(monitoringService);
+        action.execute(event);
+    }
+
+    private void exportMonitoring(GuildMessageReceivedEvent event) {
+        ExportAction action = new ExportAction(monitoringService);
         action.execute(event);
     }
 }
