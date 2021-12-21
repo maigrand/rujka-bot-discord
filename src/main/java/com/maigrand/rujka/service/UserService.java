@@ -4,7 +4,7 @@ import com.maigrand.rujka.entity.UserEntity;
 import com.maigrand.rujka.payload.user.UserDetails;
 import com.maigrand.rujka.repository.UserRepository;
 import com.maigrand.rujka.validator.group.OnCreate;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,17 +12,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.EntityExistsException;
+import javax.transaction.Transactional;
 
 @Service
 @Validated
-@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public UserService(UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
+    @Transactional
     public UserEntity loadUserByUsername(String email) throws UsernameNotFoundException {
         return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("username not found"));

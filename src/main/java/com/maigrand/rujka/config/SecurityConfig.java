@@ -17,8 +17,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -27,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         jsr250Enabled = true,
         prePostEnabled = true
 )
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
@@ -56,13 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         authenticationManagerBuilder
                 .userDetailsService(this.userService)
                 .passwordEncoder(passwordEncoder());
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("*");
     }
 
     @Override
