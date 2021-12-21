@@ -25,7 +25,7 @@ public class MonitoringEntity {
     @Column(name = "message_id")
     private String messageId;
 
-    @Column(name = "server_ip")
+    @Column(name = "server_address")
     private String serverAddress;
 
     @Column(name = "server_name")
