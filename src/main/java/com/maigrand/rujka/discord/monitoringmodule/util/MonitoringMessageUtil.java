@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
-public class MonitoringMessage {
+public class MonitoringMessageUtil {
 
     private final MonitoringEntity entity;
 

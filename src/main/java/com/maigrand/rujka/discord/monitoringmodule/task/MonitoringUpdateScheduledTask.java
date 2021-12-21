@@ -1,6 +1,6 @@
 package com.maigrand.rujka.discord.monitoringmodule.task;
 
-import com.maigrand.rujka.discord.monitoringmodule.util.MonitoringMessage;
+import com.maigrand.rujka.discord.monitoringmodule.util.MonitoringMessageUtil;
 import com.maigrand.rujka.entity.discord.MonitoringEntity;
 import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.MonitoringService;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ScheduledUpdateMonitoringMessageTask {
+public class MonitoringUpdateScheduledTask {
 
     private JDA jda;
 
@@ -43,8 +43,8 @@ public class ScheduledUpdateMonitoringMessageTask {
             }
 
             textChannelById.retrieveMessageById(ent.getMessageId()).queue(msg -> {
-                MonitoringMessage monitoringMessage = new MonitoringMessage(ent);
-                monitoringMessage.update(msg);
+                MonitoringMessageUtil monitoringMessageUtil = new MonitoringMessageUtil(ent);
+                monitoringMessageUtil.update(msg);
             }, throwable -> {
                 System.out.println(throwable.getMessage());
                 System.out.println(guildById.getName() + " : " + textChannelById.getName() + " : " + ent.getServerName());

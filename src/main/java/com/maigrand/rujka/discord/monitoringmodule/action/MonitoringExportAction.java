@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class ExportAction {
+public class MonitoringExportAction {
 
     private final MonitoringService monitoringService;
 

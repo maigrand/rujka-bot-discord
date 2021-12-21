@@ -67,38 +67,40 @@ public class MonitoringModule extends DiscordModule {
         }
 
         if (args[0].equals("m/export")) {
-            exportMonitoring(event);
+            monitoringExport(event);
             return;
         }
+
+        //todo: import json
     }
 
     private void monitoringList(GuildMessageReceivedEvent event) {
-        ListMonitoringAction action = new ListMonitoringAction(monitoringService);
+        MonitoringListAction action = new MonitoringListAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringAdd(GuildMessageReceivedEvent event) {
-        AddMonitoringAction action = new AddMonitoringAction(monitoringService);
+        MonitoringAddAction action = new MonitoringAddAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringEdit(GuildMessageReceivedEvent event) {
-        EditMonitoringAction action = new EditMonitoringAction(monitoringService);
+        MonitoringEditAction action = new MonitoringEditAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringRemove(GuildMessageReceivedEvent event) {
-        RemoveMonitoringAction action = new RemoveMonitoringAction(monitoringService);
+        MonitoringRemoveAction action = new MonitoringRemoveAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringRebuild(GuildMessageReceivedEvent event) {
-        RebuildAction action = new RebuildAction(monitoringService);
+        MonitoringRebuildAction action = new MonitoringRebuildAction(monitoringService);
         action.execute(event);
     }
 
-    private void exportMonitoring(GuildMessageReceivedEvent event) {
-        ExportAction action = new ExportAction(monitoringService);
+    private void monitoringExport(GuildMessageReceivedEvent event) {
+        MonitoringExportAction action = new MonitoringExportAction(monitoringService);
         action.execute(event);
     }
 }

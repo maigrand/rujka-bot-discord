@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 @RequiredArgsConstructor
-public class RemoveMonitoringAction {
+public class MonitoringRemoveAction {
 
     private final MonitoringService monitoringService;
 
