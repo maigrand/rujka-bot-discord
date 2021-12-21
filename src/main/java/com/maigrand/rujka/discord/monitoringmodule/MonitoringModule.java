@@ -35,7 +35,7 @@ public class MonitoringModule extends DiscordModule {
         }
 
         //fixme
-        if(!event.getAuthor().getId().equals("154437997989855232")){
+        if (!event.getAuthor().getId().equals("154437997989855232")) {
             return;
         }
 
@@ -46,17 +46,22 @@ public class MonitoringModule extends DiscordModule {
             return;
         }
 
-        if(args[0].equals("m/list")){
+        if (args[0].equals("m/edit")) {
+            monitoringEdit(event);
+            return;
+        }
+
+        if (args[0].equals("m/list")) {
             monitoringList(event);
             return;
         }
 
-        if(args[0].equals("m/remove")){
+        if (args[0].equals("m/remove")) {
             monitoringRemove(event);
             return;
         }
 
-        if(args[0].equals("m/rebuild")){
+        if (args[0].equals("m/rebuild")) {
             monitoringRebuild(event);
             return;
         }
@@ -69,6 +74,11 @@ public class MonitoringModule extends DiscordModule {
 
     private void monitoringAdd(GuildMessageReceivedEvent event) {
         AddMonitoringAction action = new AddMonitoringAction(monitoringService);
+        action.execute(event);
+    }
+
+    private void monitoringEdit(GuildMessageReceivedEvent event) {
+        EditMonitoringAction action = new EditMonitoringAction(monitoringService);
         action.execute(event);
     }
 

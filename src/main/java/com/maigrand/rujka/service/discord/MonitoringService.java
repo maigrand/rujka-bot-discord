@@ -28,7 +28,7 @@ public class MonitoringService {
     }
 
     public MonitoringEntity findByChannelIdAndServerName(String channelId, String serverName) {
-        return monitoringRepository.findByChannelIdAndServerName(channelId,serverName)
+        return monitoringRepository.findByChannelIdAndServerName(channelId, serverName)
                 .orElse(null);
     }
 
