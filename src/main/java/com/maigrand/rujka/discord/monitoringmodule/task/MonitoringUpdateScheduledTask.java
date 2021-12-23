@@ -24,7 +24,6 @@ public class MonitoringUpdateScheduledTask {
     private final JdaService jdaService;
 
     @Scheduled(cron = "0 0/1 * * * ?", zone = "Europe/Moscow")
-    //@Scheduled(fixedRate = 1000)
     private void execute() {
         if (jda == null) {
             jda = jdaService.getJda();
