@@ -6,12 +6,14 @@ import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
+import org.springframework.util.ResourceUtils;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +51,10 @@ public class MonitoringMessageUtil {
             emb.setTitle(emoteOnline + "  **0/" + maxClients + "**  |  **" + gameTypeField + "**  |  **" + hostName + "**");
             emb.setFooter(footer);
             emb.setTimestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()));
-            message.editMessageEmbeds(emb.build()).queue();
+
+            message.editMessageEmbeds(emb.build())
+                    .retainFilesById(new ArrayList<>())
+                    .queue();
             return;
         }
 
@@ -69,7 +74,22 @@ public class MonitoringMessageUtil {
             emb.setColor(new Color(10, 160, 10));
         }
 
-        message.editMessageEmbeds(emb.build()).queue();
+        String mapField = getMapField(statusNet);
+        String mapFileName = mapField.replaceAll("/", "") + ".jpg";
+
+        File mapThumbnail = getMapThumbnail(mapFileName);
+        if (mapThumbnail != null) {
+            emb.setThumbnail("attachment://map.jpg");
+            message.editMessageEmbeds(emb.build())
+                    .retainFilesById(new ArrayList<>())
+                    .addFile(mapThumbnail, "map.jpg")
+                    .queue();
+            return;
+        }
+
+        message.editMessageEmbeds(emb.build())
+                .retainFilesById(new ArrayList<>())
+                .queue();
     }
 
     private String getVariables(String var, String statusNet) {
@@ -171,6 +191,19 @@ public class MonitoringMessageUtil {
                 return "Чтобы зайти, скачайте отсюда архив и распакуйте в папку base: http://bit.ly/2MQ6oba";
             default:
                 return "/connect " + address + ";password " + password;
+        }
+    }
+
+    private File getMapThumbnail(String mapFileName) {
+        try {
+            return ResourceUtils.getFile("classpath:discordmonitoringimages/" + mapFileName);
+        } catch (FileNotFoundException e) {
+            try {
+                return ResourceUtils.getFile("classpath:discordmonitoringimages/cat.png");
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+                return null;
+            }
         }
     }
 }
