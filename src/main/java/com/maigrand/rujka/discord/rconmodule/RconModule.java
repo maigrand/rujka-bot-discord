@@ -4,9 +4,7 @@ import com.maigrand.rujka.discord.DiscordModule;
 import com.maigrand.rujka.discord.rconmodule.action.*;
 import com.maigrand.rujka.entity.discord.rcon.RconEntity;
 import com.maigrand.rujka.service.JdaService;
-import com.maigrand.rujka.service.discord.rcon.RconService;
-import com.maigrand.rujka.service.discord.rcon.RconIpScanIpService;
-import com.maigrand.rujka.service.discord.rcon.RconIpScanNameService;
+import com.maigrand.rujka.service.discord.rcon.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -65,6 +63,13 @@ public class RconModule extends DiscordModule {
             return;
         }
 
+        if (event.getMessage().getContentRaw().equals("rcon/")
+                || event.getMessage().getContentRaw().equals("rcon/help")
+                || event.getMessage().getContentRaw().equals("rcon/info")) {
+            rconInfo(event);
+            return;
+        }
+
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
         if (args[0].equals("rcon/add")) {
@@ -95,6 +100,11 @@ public class RconModule extends DiscordModule {
         if (event.getMessage().getContentRaw().startsWith("rcon/")) {
             rconExecute(event);
         }
+    }
+
+    private void rconInfo(GuildMessageReceivedEvent event) {
+        RconInfoAction action = new RconInfoAction();
+        action.execute(event);
     }
 
     private void rconAdd(GuildMessageReceivedEvent event) {
