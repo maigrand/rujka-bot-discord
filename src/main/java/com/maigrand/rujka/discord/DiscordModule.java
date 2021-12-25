@@ -10,8 +10,8 @@ public class DiscordModule extends ListenerAdapter {
 
     protected final JdaService jdaService;
 
-    public DiscordModule(JdaService jdaService){
-        this.jdaService=jdaService;
+    public DiscordModule(JdaService jdaService) {
+        this.jdaService = jdaService;
         JDA jda = jdaService.getJda();
         jda.addEventListener(this);
     }
