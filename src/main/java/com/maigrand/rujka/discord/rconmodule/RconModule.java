@@ -75,6 +75,21 @@ public class RconModule extends DiscordModule {
             return;
         }
 
+        if (args[0].equals("rcon/add")) {
+            rconAdd(event);
+            return;
+        }
+
+        if (args[0].equals("rcon/edit")) {
+            rconEdit(event);
+            return;
+        }
+
+        if (args[0].equals("rcon/remove")) {
+            rconRemove(event);
+            return;
+        }
+
         if (!event.getChannel().getId().equals(rconTextChannelId)) {
             return;
         }
@@ -86,23 +101,8 @@ public class RconModule extends DiscordModule {
             return;
         }
 
-        if (args[0].equals("rcon/add")) {
-            rconAdd(event);
-            return;
-        }
-
-        if (args[0].equals("rcon/edit")) {
-            rconEdit(event);
-            return;
-        }
-
         if (args[0].equals("rcon/list")) {
             rconList(event);
-            return;
-        }
-
-        if (args[0].equals("rcon/remove")) {
-            rconRemove(event);
             return;
         }
 
