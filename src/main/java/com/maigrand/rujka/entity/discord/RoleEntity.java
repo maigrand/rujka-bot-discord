@@ -21,10 +21,10 @@ public class RoleEntity {
     @Setter(AccessLevel.NONE)
     private Integer id;
 
-    @Column(name = "role_id", unique = true)
+    @Column(name = "role_id")
     private String roleId;
 
-    @Column(name = "guild_id", unique = true)
+    @Column(name = "guild_id")
     private String guildId;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -21,10 +21,10 @@ public class MemberEntity {
     @Setter(AccessLevel.NONE)
     private Integer id;
 
-    @Column(name = "member_id", unique = true)
+    @Column(name = "member_id")
     private String memberId;
 
-    @Column(name = "guild_id", unique = true)
+    @Column(name = "guild_id")
     private String guildId;
 
     @ManyToMany(fetch = FetchType.EAGER)
