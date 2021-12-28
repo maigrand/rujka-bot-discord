@@ -86,13 +86,13 @@ public class PermissionModule extends DiscordModule {
     private void permissionInfo(GuildMessageReceivedEvent event) {
         String s = "Основные команды:" +
                 "\n" +
-                "perm/list" +
+                "`perm/list`" +
                 "\n" +
-                "perm/members" +
+                "`perm/members`" +
                 "\n" +
-                "perm/roles" +
+                "`perm/roles`" +
                 "\n" +
-                "perm/add";
+                "`perm/add`";
         event.getChannel().sendMessage(s).queue();
     }
 
