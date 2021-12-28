@@ -45,6 +45,11 @@ public class MonitoringModule extends DiscordModule {
 
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
+        if (args[0].equals("m/help")) {
+            monitoringInfo(event);
+            return;
+        }
+
         if (args[0].equals("m/add")) {
             monitoringAdd(event);
             return;
@@ -76,6 +81,11 @@ public class MonitoringModule extends DiscordModule {
         }
 
         //todo: import json
+    }
+
+    private void monitoringInfo(GuildMessageReceivedEvent event) {
+        MonitoringInfoAction action = new MonitoringInfoAction();
+        action.execute(event);
     }
 
     private void monitoringList(GuildMessageReceivedEvent event) {

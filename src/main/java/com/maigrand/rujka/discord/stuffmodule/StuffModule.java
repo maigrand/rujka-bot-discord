@@ -17,6 +17,17 @@ public class StuffModule extends DiscordModule {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         super.onGuildMessageReceived(event);
 
+        if (event.getMessage().getAuthor().isBot()) {
+            return;
+        }
+
+        if (event.getMessage().getMentionedMembers().contains(event.getGuild().getMember(event.getJDA().getSelfUser()))) {
+            event.getChannel()
+                    .sendMessage("Доступные модули \n Мониторинг: m/help \n Ркон: rcon/help \n Права: perm/help")
+                    .queue();
+            return;
+        }
+
         if (event.getMessage().getContentRaw().contains("май") || event.getMessage().getContentRaw().contains("mai")) {
             if (event.getMessage().getAuthor().isBot()) {
                 return;
