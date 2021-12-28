@@ -6,6 +6,7 @@ import com.maigrand.rujka.repository.discord.MonitoringRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -56,5 +57,10 @@ public class MonitoringService {
 
     public void delete(int id) {
         monitoringRepository.deleteById(id);
+    }
+
+    public MonitoringEntity findById(Integer id) {
+        return monitoringRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("monitoring not found"));
     }
 }
