@@ -8,7 +8,8 @@ import com.maigrand.rujka.service.discord.rcon.RconIpScanNameService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -58,10 +59,8 @@ public class RconIpScanAction {
     private void sendFile(GuildMessageReceivedEvent event, List<Map<String, Set<String>>> ipScanList) {
         try {
             File tempFile = File.createTempFile("iplog", ".json");
-            FileWriter fileWriter = new FileWriter(tempFile);
             ObjectMapper objectMapper = new ObjectMapper();
-            String out = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(ipScanList);
-            fileWriter.write(out);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(tempFile, ipScanList);
             event.getChannel().sendFile(tempFile).queue();
             tempFile.delete();
         } catch (IOException e) {
