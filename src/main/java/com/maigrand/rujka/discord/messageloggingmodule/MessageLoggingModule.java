@@ -11,20 +11,22 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.*;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.time.*;
+import java.time.LocalDateTime;
 
 @Component
 public class MessageLoggingModule extends DiscordModule {
 
-    //todo: вынести в конфиг или бд
-    private final String LOG_CHANNEL_ID = "539174343498792970";
-
     private final MessageStoreService messageStoreService;
 
     private TextChannel logTextChannel;
+
+    //todo: вынести в бд
+    @Value("${app.discord.module.message_logging.text_channel_id}")
+    private String LOG_CHANNEL_ID;
 
     public MessageLoggingModule(JdaService jdaService,
             MessageStoreService messageStoreService) {

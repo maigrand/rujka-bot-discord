@@ -9,6 +9,7 @@ app.security.jwt.remember-me-expire-length=604800000
 
 app.discord.token=<discord_token>
 app.discord.module.rcon.text_channel.id=<id>
+app.discord.module.message_logging.text_channel_id=<id>
 
 logging.file.path=../logs
 logging.file.name=../logs/rujka.log
