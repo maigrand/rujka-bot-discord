@@ -13,7 +13,7 @@ public class RconInfoAction {
                 "\n" +
                 "`rcon/rem`" +
                 "\n" +
-                "`rcon/newpass`" +
+                "`rcon/edit`" +
                 "\n" +
                 "`rcon/list`" +
                 "\n" +

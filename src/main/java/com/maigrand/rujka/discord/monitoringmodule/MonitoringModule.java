@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class MonitoringModule extends DiscordModule {
 
@@ -16,6 +18,13 @@ public class MonitoringModule extends DiscordModule {
     public MonitoringModule(JdaService jdaService, MonitoringService monitoringService) {
         super(jdaService);
         this.monitoringService = monitoringService;
+    }
+
+    @PostConstruct
+    public void init() {
+        registerPermission(new String[]{
+                "MONITORING_MANAGER"
+        });
     }
 
     @Override
@@ -31,11 +40,6 @@ public class MonitoringModule extends DiscordModule {
         }
 
         if (!event.getMessage().getContentRaw().startsWith("m/")) {
-            return;
-        }
-
-        //fixme
-        if (!event.getAuthor().getId().equals("154437997989855232")) {
             return;
         }
 
@@ -75,31 +79,61 @@ public class MonitoringModule extends DiscordModule {
     }
 
     private void monitoringList(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
         MonitoringListAction action = new MonitoringListAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringAdd(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
         MonitoringAddAction action = new MonitoringAddAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringEdit(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
         MonitoringEditAction action = new MonitoringEditAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringRemove(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
         MonitoringRemoveAction action = new MonitoringRemoveAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringRebuild(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
         MonitoringRebuildAction action = new MonitoringRebuildAction(monitoringService);
         action.execute(event);
     }
 
     private void monitoringExport(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
         MonitoringExportAction action = new MonitoringExportAction(monitoringService);
         action.execute(event);
     }
