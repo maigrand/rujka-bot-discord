@@ -57,6 +57,11 @@ public class PermissionModule extends DiscordModule {
 
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
+        if (args[0].equals("perm/help")) {
+            permissionInfo(event);
+            return;
+        }
+
         if (args[0].equals("perm/list")) {
             permissionList(event);
             return;
@@ -76,6 +81,19 @@ public class PermissionModule extends DiscordModule {
             permissionAdd(event);
             return;
         }
+    }
+
+    private void permissionInfo(GuildMessageReceivedEvent event) {
+        String s = "Основные команды:" +
+                "\n" +
+                "perm/list" +
+                "\n" +
+                "perm/members" +
+                "\n" +
+                "perm/roles" +
+                "\n" +
+                "perm/add";
+        event.getChannel().sendMessage(s).queue();
     }
 
     private void permissionList(GuildMessageReceivedEvent event) {

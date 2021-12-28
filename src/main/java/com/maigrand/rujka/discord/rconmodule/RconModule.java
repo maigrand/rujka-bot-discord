@@ -90,14 +90,14 @@ public class RconModule extends DiscordModule {
             return;
         }
 
-        if (!event.getChannel().getId().equals(rconTextChannelId)) {
-            return;
-        }
-
         if (event.getMessage().getContentRaw().equals("rcon/")
                 || event.getMessage().getContentRaw().equals("rcon/help")
                 || event.getMessage().getContentRaw().equals("rcon/info")) {
             rconInfo(event);
+            return;
+        }
+
+        if (!event.getChannel().getId().equals(rconTextChannelId)) {
             return;
         }
 

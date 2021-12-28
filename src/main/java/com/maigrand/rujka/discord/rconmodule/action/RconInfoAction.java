@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class RconInfoAction {
 
     public void execute(GuildMessageReceivedEvent event) {
-        String s = "Основные команды:" +
+        String s = "Основные команды (будут работать только в специальном канале):" +
                 "\n" +
                 "`rcon/add`" +
                 "\n" +

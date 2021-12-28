@@ -23,7 +23,7 @@ public class StuffModule extends DiscordModule {
 
         if (event.getMessage().getMentionedMembers().contains(event.getGuild().getMember(event.getJDA().getSelfUser()))) {
             event.getChannel()
-                    .sendMessage("Доступные модули \n Мониторинг: m/help \n Ркон: rcon/help \n Права: perm/help")
+                    .sendMessage("Доступные модули \nМониторинг: m/help \nРкон: rcon/help \nПрава: perm/help")
                     .queue();
             return;
         }
