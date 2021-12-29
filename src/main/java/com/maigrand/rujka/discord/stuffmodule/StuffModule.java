@@ -30,7 +30,10 @@ public class StuffModule extends DiscordModule {
             return;
         }
 
-        if (event.getMessage().getContentRaw().contains("май") || event.getMessage().getContentRaw().contains("mai")) {
+        if (event.getMessage().getContentRaw().contains("май")
+                || event.getMessage().getContentRaw().contains("mai")
+                || event.getMessage().getContentRaw().contains("маю")
+                || event.getMessage().getContentRaw().contains("мая")) {
             if (event.getMessage().getAuthor().isBot()) {
                 return;
             }
