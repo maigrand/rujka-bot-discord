@@ -3,7 +3,8 @@ package com.maigrand.rujka.discord.rconmodule.util;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class RconEmbedUtil {
 
@@ -12,7 +13,7 @@ public class RconEmbedUtil {
         emb.setAuthor(cmd);
         emb.setTitle(title);
         emb.setDescription(description);
-        emb.setTimestamp(new Date().toInstant());
+        emb.setTimestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()));
         emb.setColor(new Color(255, 165, 0));
         return emb;
     }

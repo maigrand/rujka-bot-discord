@@ -2,9 +2,11 @@ package com.maigrand.rujka.discord.permissionmodule;
 
 import com.maigrand.rujka.discord.DiscordModule;
 import com.maigrand.rujka.discord.util.DiscordId;
+import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import com.maigrand.rujka.entity.discord.*;
 import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.*;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
@@ -93,7 +95,8 @@ public class PermissionModule extends DiscordModule {
                 "`perm/roles`" +
                 "\n" +
                 "`perm/add`";
-        event.getChannel().sendMessage(s).queue();
+        EmbedBuilder emb = InfoEmbedUtil.getEmbedBuilder(event.getJDA(), "Permission Module", s);
+        event.getChannel().sendMessageEmbeds(emb.build()).queue();
     }
 
     private void permissionList(GuildMessageReceivedEvent event) {

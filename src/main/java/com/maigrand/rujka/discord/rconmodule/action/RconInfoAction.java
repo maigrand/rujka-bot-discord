@@ -1,6 +1,6 @@
 package com.maigrand.rujka.discord.rconmodule.action;
 
-import com.maigrand.rujka.discord.rconmodule.util.RconEmbedUtil;
+import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -27,8 +27,7 @@ public class RconInfoAction {
                 "\n" +
                 "Все пожелания или сообщения об ошибках писать в ЛС - <@154437997989855232>";
 
-        EmbedBuilder emb = RconEmbedUtil.getEmbedBuilder("rcon/info", "Rcon Module Info", s);
-        event.getChannel().sendMessage(event.getAuthor().getAsMention()).queue(message ->
-                message.editMessageEmbeds(emb.build()).queue());
+        EmbedBuilder emb = InfoEmbedUtil.getEmbedBuilder(event.getJDA(), "Rcon Module", s);
+        event.getChannel().sendMessageEmbeds(emb.build()).queue();
     }
 }

@@ -1,7 +1,9 @@
 package com.maigrand.rujka.discord.stuffmodule;
 
 import com.maigrand.rujka.discord.DiscordModule;
+import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import com.maigrand.rujka.service.JdaService;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -22,9 +24,9 @@ public class StuffModule extends DiscordModule {
         }
 
         if (event.getMessage().getMentionedMembers().contains(event.getGuild().getMember(event.getJDA().getSelfUser()))) {
-            event.getChannel()
-                    .sendMessage("Доступные модули \nМониторинг: m/help \nРкон: rcon/help \nПрава: perm/help")
-                    .queue();
+            String s = "Мониторинг: m/help\nРкон: rcon/help\nПрава: perm/help";
+            EmbedBuilder emb = InfoEmbedUtil.getEmbedBuilder(event.getJDA(), "Доступные модули", s);
+            event.getChannel().sendMessageEmbeds(emb.build()).queue();
             return;
         }
 
