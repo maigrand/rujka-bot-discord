@@ -40,4 +40,8 @@ public class RoleEntity {
     public void addPermission(PermissionEntity entity) {
         this.permissionEntitySet.add(entity);
     }
+
+    public void removePermission(PermissionEntity entity) {
+        this.permissionEntitySet.remove(entity);
+    }
 }

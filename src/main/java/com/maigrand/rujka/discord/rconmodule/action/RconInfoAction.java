@@ -11,7 +11,7 @@ public class RconInfoAction {
                 "\n" +
                 "`rcon/add`" +
                 "\n" +
-                "`rcon/rem`" +
+                "`rcon/remove`" +
                 "\n" +
                 "`rcon/edit`" +
                 "\n" +

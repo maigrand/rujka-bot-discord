@@ -83,6 +83,11 @@ public class PermissionModule extends DiscordModule {
             permissionAdd(event);
             return;
         }
+
+        if (args[0].equals("perm/remove")) {
+            permissionRemove(event);
+            return;
+        }
     }
 
     private void permissionInfo(GuildMessageReceivedEvent event) {
@@ -94,7 +99,9 @@ public class PermissionModule extends DiscordModule {
                 "\n" +
                 "`perm/roles`" +
                 "\n" +
-                "`perm/add`";
+                "`perm/add`" +
+                "\n" +
+                "`perm/remove`";
         EmbedBuilder emb = InfoEmbedUtil.getEmbedBuilder(event.getJDA(), "Permission Module", s);
         event.getChannel().sendMessageEmbeds(emb.build()).queue();
     }
@@ -212,6 +219,55 @@ public class PermissionModule extends DiscordModule {
             roleEntity.addPermission(permissionEntity);
             roleService.save(roleEntity);
             event.getChannel().sendMessage("Added.").queue();
+            return;
+        }
+
+        event.getChannel().sendMessage("Bad member or role").queue();
+    }
+
+    private void permissionRemove(GuildMessageReceivedEvent event) {
+        boolean allowed = isAllowed(event.getMember(), "PERMISSION_MANAGER");
+        if (!allowed) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
+
+        String[] args = event.getMessage().getContentRaw().split("\\s+");
+        if (args.length != 3) {
+            event.getChannel().sendMessage("Usage: cmd <@member or @role> <permName>").queue();
+            return;
+        }
+
+        PermissionEntity permissionEntity = permissionService.findByName(args[2]);
+        if (permissionEntity == null) {
+            event.getChannel().sendMessage("Bad permission").queue();
+            return;
+        }
+
+        Guild guild = event.getGuild();
+        Member member = DiscordId.getMember(guild, args[1]);
+        Role role = DiscordId.getRole(guild, args[1]);
+        if (member != null) {
+            MemberEntity memberEntity = memberService.findByMemberIdAndGuildId(member.getId(), guild.getId());
+            if (memberEntity == null) {
+                event.getChannel().sendMessage("Bad member").queue();
+                return;
+            }
+            memberEntity.removePermission(permissionEntity);
+            memberService.save(memberEntity);
+            event.getChannel().sendMessage("Removed.").queue();
+            return;
+        }
+
+        if (role != null) {
+            RoleEntity roleEntity = roleService.findByRoleIdAndGuildId(role.getId(), guild.getId());
+            if (roleEntity == null) {
+                event.getChannel().sendMessage("Bad role").queue();
+                return;
+            }
+            roleEntity.removePermission(permissionEntity);
+            roleService.save(roleEntity);
+            event.getChannel().sendMessage("Removed.").queue();
             return;
         }
 
