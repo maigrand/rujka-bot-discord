@@ -16,6 +16,9 @@ logging.file.name=../logs/rujka.log
 logging.level.root=info
 logging.logback.rollingpolicy.max-history=5
 
+springfox.documentation.swagger-ui.base-url=/api
+springfox.documentation.swagger.v2.path=/api/api-docs
+
 server.port=8082
 debug=false
 spring.jpa.hibernate.ddl-auto=update
