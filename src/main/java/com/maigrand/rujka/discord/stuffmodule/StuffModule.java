@@ -38,18 +38,15 @@ public class StuffModule extends DiscordModule {
             return;
         }
 
-        if (event.getMessage().getContentRaw().contains("май")
-                || event.getMessage().getContentRaw().contains("mai")
-                || event.getMessage().getContentRaw().contains("маю")
-                || event.getMessage().getContentRaw().contains("мая")) {
-            if (event.getMessage().getAuthor().isBot()) {
-                return;
+        String[] args = event.getMessage().getContentRaw().split("\\s+");
+        for (String arg : args) {
+            if (arg.equals("mai") || arg.equals("май") || arg.equals("маю") || arg.equals("мая")) {
+                event.getJDA().getUserById("154437997989855232").openPrivateChannel().queue(privateChannel -> {
+                    privateChannel.sendMessage("Mentioned " + event.getMessage().getJumpUrl()).queue();
+                }, throwable -> {
+                    System.out.println(throwable.getMessage());
+                });
             }
-            event.getJDA().getUserById("154437997989855232").openPrivateChannel().queue(privateChannel -> {
-                privateChannel.sendMessage("Mentioned " + event.getMessage().getJumpUrl()).queue();
-            }, throwable -> {
-                System.out.println(throwable.getMessage());
-            });
         }
     }
 
