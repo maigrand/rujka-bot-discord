@@ -3,14 +3,14 @@ package com.maigrand.rujka.discord.rconmodule.action;
 import com.maigrand.rujka.entity.discord.rcon.RconEntity;
 import com.maigrand.rujka.service.discord.rcon.RconService;
 import lombok.RequiredArgsConstructor;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 @RequiredArgsConstructor
 public class RconEditAction {
 
     private final RconService rconService;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         if (event.getAuthor().equals(event.getJDA().getSelfUser())) {
             return;
         }

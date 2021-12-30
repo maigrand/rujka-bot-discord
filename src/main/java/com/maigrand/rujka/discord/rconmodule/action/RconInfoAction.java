@@ -2,11 +2,11 @@ package com.maigrand.rujka.discord.rconmodule.action;
 
 import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class RconInfoAction {
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         String s = "Основные команды (будут работать только в специальном канале):" +
                 "\n" +
                 "`rcon/add`" +

@@ -5,7 +5,7 @@ import com.maigrand.rujka.discord.rconmodule.action.*;
 import com.maigrand.rujka.entity.discord.rcon.RconEntity;
 import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.rcon.*;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -53,8 +53,8 @@ public class RconModule extends DiscordModule {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        super.onGuildMessageReceived(event);
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        super.onMessageReceived(event);
 
         if (event.getMember() == null) {
             return;
@@ -111,12 +111,12 @@ public class RconModule extends DiscordModule {
         }
     }
 
-    private void rconInfo(GuildMessageReceivedEvent event) {
+    private void rconInfo(MessageReceivedEvent event) {
         RconInfoAction action = new RconInfoAction();
         action.execute(event);
     }
 
-    private void rconAdd(GuildMessageReceivedEvent event) {
+    private void rconAdd(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "RCON_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -126,7 +126,7 @@ public class RconModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void rconEdit(GuildMessageReceivedEvent event) {
+    private void rconEdit(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "RCON_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -136,7 +136,7 @@ public class RconModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void rconExecute(GuildMessageReceivedEvent event) {
+    private void rconExecute(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "RCON_USE");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -146,7 +146,7 @@ public class RconModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void rconList(GuildMessageReceivedEvent event) {
+    private void rconList(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "RCON_USE");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -156,7 +156,7 @@ public class RconModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void rconRemove(GuildMessageReceivedEvent event) {
+    private void rconRemove(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "RCON_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -166,7 +166,7 @@ public class RconModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void rconIp(GuildMessageReceivedEvent event) {
+    private void rconIp(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "RCON_IP");
         if (!allowed) {
             return;

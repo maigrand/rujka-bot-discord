@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class MonitoringAddAction {
 
     private final MonitoringService monitoringService;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         if (event.getAuthor().equals(event.getJDA().getSelfUser())) {
             return;
         }

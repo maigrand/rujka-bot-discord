@@ -2,11 +2,11 @@ package com.maigrand.rujka.discord.monitoringmodule.action;
 
 import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class MonitoringInfoAction {
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         String s = "Основные команды:" +
                 "\n" +
                 "`m/list`" +

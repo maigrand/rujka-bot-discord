@@ -6,7 +6,7 @@ import com.maigrand.rujka.entity.discord.rcon.RconIpScanNameEntity;
 import com.maigrand.rujka.service.discord.rcon.RconIpScanIpService;
 import com.maigrand.rujka.service.discord.rcon.RconIpScanNameService;
 import lombok.RequiredArgsConstructor;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class RconIpScanAction {
 
     private final RconIpScanNameService ipScanNameService;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
         if (args.length == 1) {
@@ -56,7 +56,7 @@ public class RconIpScanAction {
         }
     }
 
-    private void sendFile(GuildMessageReceivedEvent event, List<Map<String, Set<String>>> ipScanList) {
+    private void sendFile(MessageReceivedEvent event, List<Map<String, Set<String>>> ipScanList) {
         try {
             File tempFile = File.createTempFile("iplog", ".json");
             ObjectMapper objectMapper = new ObjectMapper();

@@ -3,7 +3,7 @@ package com.maigrand.rujka.discord.rconmodule.action;
 import com.maigrand.rujka.entity.discord.rcon.RconEntity;
 import com.maigrand.rujka.service.discord.rcon.RconService;
 import lombok.RequiredArgsConstructor;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class RconAddAction {
 
     private final List<String> serverNameList;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
 
         if (args.length == 1) {
@@ -23,7 +23,7 @@ public class RconAddAction {
         }
 
         RconEntity ent = rconService.findByServerName(args[2]);
-        if(ent != null){
+        if (ent != null) {
             event.getChannel().sendMessage("Already exists.").queue();
             return;
         }

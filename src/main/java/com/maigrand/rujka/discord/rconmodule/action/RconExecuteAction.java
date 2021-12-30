@@ -6,7 +6,7 @@ import com.maigrand.rujka.entity.discord.rcon.RconEntity;
 import com.maigrand.rujka.service.discord.rcon.RconService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -19,7 +19,7 @@ public class RconExecuteAction {
 
     private final List<String> serverNameList;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         try {
             prepare(event);
         } catch (SocketException | UnknownHostException e) {
@@ -28,7 +28,7 @@ public class RconExecuteAction {
         }
     }
 
-    private void prepare(GuildMessageReceivedEvent event) throws SocketException, UnknownHostException {
+    private void prepare(MessageReceivedEvent event) throws SocketException, UnknownHostException {
         if (serverNameList != null) {
             if (!serverNameList.isEmpty()) {
                 String[] args = event.getMessage().getContentRaw().split("\\s+");
@@ -45,7 +45,7 @@ public class RconExecuteAction {
     }
 
     private void sendCommand(String serverName,
-            GuildMessageReceivedEvent event) throws SocketException, UnknownHostException {
+            MessageReceivedEvent event) throws SocketException, UnknownHostException {
         RconEntity entity = rconService.findByServerName(serverName);
         String[] serverAddress = entity.getServerAddress().split(":");
         int sizeCmdName = event.getMessage().getContentRaw().split("\\s+")[0].length() + 1;

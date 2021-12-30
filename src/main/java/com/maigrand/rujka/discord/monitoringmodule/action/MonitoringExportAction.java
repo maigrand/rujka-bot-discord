@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maigrand.rujka.entity.discord.MonitoringEntity;
 import com.maigrand.rujka.service.discord.MonitoringService;
 import lombok.RequiredArgsConstructor;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class MonitoringExportAction {
 
     private final MonitoringService monitoringService;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         if (event.getAuthor().equals(event.getJDA().getSelfUser())) {
             return;
         }

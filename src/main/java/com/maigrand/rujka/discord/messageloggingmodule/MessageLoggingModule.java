@@ -9,7 +9,7 @@ import com.maigrand.rujka.service.discord.MessageStoreService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.*;
+import net.dv8tion.jda.api.events.message.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -40,8 +40,8 @@ public class MessageLoggingModule extends DiscordModule {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        super.onGuildMessageReceived(event);
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        super.onMessageReceived(event);
 
         if (event.getAuthor().isBot()) {
             return;
@@ -51,20 +51,20 @@ public class MessageLoggingModule extends DiscordModule {
     }
 
     @Override
-    public void onGuildMessageDelete(@NotNull GuildMessageDeleteEvent event) {
-        super.onGuildMessageDelete(event);
+    public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+        super.onMessageDelete(event);
 
         messageDelete(event);
     }
 
     @Override
-    public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
-        super.onGuildMessageUpdate(event);
+    public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
+        super.onMessageUpdate(event);
 
         messageUpdate(event);
     }
 
-    private void messageSave(GuildMessageReceivedEvent event) {
+    private void messageSave(MessageReceivedEvent event) {
         MessageStoreEntity ent = new MessageStoreEntity();
         ent.setGuildId(event.getGuild().getId());
         ent.setChannelId(event.getChannel().getId());
@@ -75,7 +75,7 @@ public class MessageLoggingModule extends DiscordModule {
         messageStoreService.save(ent);
     }
 
-    private void messageUpdate(GuildMessageUpdateEvent event) {
+    private void messageUpdate(MessageUpdateEvent event) {
         Guild guild = event.getGuild();
         String guildId = guild.getId();
         String channelId = event.getChannel().getId();
@@ -100,7 +100,7 @@ public class MessageLoggingModule extends DiscordModule {
         messageStoreService.save(ent);
     }
 
-    private void messageDelete(GuildMessageDeleteEvent event) {
+    private void messageDelete(MessageDeleteEvent event) {
         Guild guild = event.getGuild();
         String guildId = guild.getId();
         String channelId = event.getChannel().getId();

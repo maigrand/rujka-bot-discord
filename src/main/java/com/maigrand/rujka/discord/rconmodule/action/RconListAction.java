@@ -5,7 +5,7 @@ import com.maigrand.rujka.entity.discord.rcon.RconEntity;
 import com.maigrand.rujka.service.discord.rcon.RconService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class RconListAction {
 
     private final RconService rconService;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         List<RconEntity> all = rconService.findAll();
         StringBuilder sb = new StringBuilder();
         for (RconEntity ent : all) {

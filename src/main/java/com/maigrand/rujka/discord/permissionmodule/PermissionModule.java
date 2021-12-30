@@ -8,7 +8,7 @@ import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -42,8 +42,8 @@ public class PermissionModule extends DiscordModule {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        super.onGuildMessageReceived(event);
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        super.onMessageReceived(event);
 
         if (event.getMember() == null) {
             return;
@@ -90,7 +90,7 @@ public class PermissionModule extends DiscordModule {
         }
     }
 
-    private void permissionInfo(GuildMessageReceivedEvent event) {
+    private void permissionInfo(MessageReceivedEvent event) {
         String s = "Основные команды:" +
                 "\n" +
                 "`perm/list`" +
@@ -106,7 +106,7 @@ public class PermissionModule extends DiscordModule {
         event.getChannel().sendMessageEmbeds(emb.build()).queue();
     }
 
-    private void permissionList(GuildMessageReceivedEvent event) {
+    private void permissionList(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "PERMISSION_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -122,7 +122,7 @@ public class PermissionModule extends DiscordModule {
         event.getChannel().sendMessage(sb).queue();
     }
 
-    private void permissionMembers(GuildMessageReceivedEvent event) {
+    private void permissionMembers(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "PERMISSION_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -147,7 +147,7 @@ public class PermissionModule extends DiscordModule {
         event.getChannel().sendMessage(sb).queue();
     }
 
-    private void permissionRoles(GuildMessageReceivedEvent event) {
+    private void permissionRoles(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "PERMISSION_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -172,7 +172,7 @@ public class PermissionModule extends DiscordModule {
         event.getChannel().sendMessage(sb).queue();
     }
 
-    private void permissionAdd(GuildMessageReceivedEvent event) {
+    private void permissionAdd(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "PERMISSION_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -225,7 +225,7 @@ public class PermissionModule extends DiscordModule {
         event.getChannel().sendMessage("Bad member or role").queue();
     }
 
-    private void permissionRemove(GuildMessageReceivedEvent event) {
+    private void permissionRemove(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "PERMISSION_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();

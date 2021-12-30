@@ -5,14 +5,14 @@ import com.maigrand.rujka.entity.discord.MonitoringEntity;
 import com.maigrand.rujka.service.discord.MonitoringService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 @RequiredArgsConstructor
 public class MonitoringEditAction {
 
     private final MonitoringService monitoringService;
 
-    public void execute(GuildMessageReceivedEvent event) {
+    public void execute(MessageReceivedEvent event) {
         if (event.getAuthor().equals(event.getJDA().getSelfUser())) {
             return;
         }

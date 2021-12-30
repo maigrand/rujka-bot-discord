@@ -4,7 +4,7 @@ import com.maigrand.rujka.discord.DiscordModule;
 import com.maigrand.rujka.discord.monitoringmodule.action.*;
 import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.MonitoringService;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +28,8 @@ public class MonitoringModule extends DiscordModule {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        super.onGuildMessageReceived(event);
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        super.onMessageReceived(event);
 
         if (event.getMember() == null) {
             return;
@@ -83,12 +83,12 @@ public class MonitoringModule extends DiscordModule {
         //todo: import json
     }
 
-    private void monitoringInfo(GuildMessageReceivedEvent event) {
+    private void monitoringInfo(MessageReceivedEvent event) {
         MonitoringInfoAction action = new MonitoringInfoAction();
         action.execute(event);
     }
 
-    private void monitoringList(GuildMessageReceivedEvent event) {
+    private void monitoringList(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -98,7 +98,7 @@ public class MonitoringModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void monitoringAdd(GuildMessageReceivedEvent event) {
+    private void monitoringAdd(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -108,7 +108,7 @@ public class MonitoringModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void monitoringEdit(GuildMessageReceivedEvent event) {
+    private void monitoringEdit(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -118,7 +118,7 @@ public class MonitoringModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void monitoringRemove(GuildMessageReceivedEvent event) {
+    private void monitoringRemove(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -128,7 +128,7 @@ public class MonitoringModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void monitoringRebuild(GuildMessageReceivedEvent event) {
+    private void monitoringRebuild(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
@@ -138,7 +138,7 @@ public class MonitoringModule extends DiscordModule {
         action.execute(event);
     }
 
-    private void monitoringExport(GuildMessageReceivedEvent event) {
+    private void monitoringExport(MessageReceivedEvent event) {
         boolean allowed = isAllowed(event.getMember(), "MONITORING_MANAGER");
         if (!allowed) {
             event.getChannel().sendMessage("Bad permission").queue();
