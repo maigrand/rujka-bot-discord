@@ -6,12 +6,8 @@ import com.maigrand.rujka.service.JdaService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class StuffModule extends DiscordModule {
@@ -31,12 +27,14 @@ public class StuffModule extends DiscordModule {
         if (event.getMessage().getMentionedMembers().contains(event.getGuild().getMember(event.getJDA().getSelfUser()))) {
             String s = "Мониторинг: m/help\nРкон: rcon/help\nПрава: perm/help";
             EmbedBuilder emb = InfoEmbedUtil.getEmbedBuilder(event.getJDA(), "Доступные модули", s);
-            ActionRow actionRow = ActionRow.of(List.of(Button.primary("permission", "permission"),
+            //todo: Дополнить механизм дискорд кнопок
+            /* ActionRow actionRow = ActionRow.of(List.of(Button.primary("permission", "permission"),
                     Button.primary("monitoring", "monitoring"),
                     Button.primary("rcon", "rcon")));
             event.getChannel().sendMessageEmbeds(emb.build())
                     .setActionRows(actionRow)
-                    .queue();
+                    .queue();*/
+            event.getChannel().sendMessageEmbeds(emb.build()).queue();
             return;
         }
 
