@@ -42,7 +42,11 @@ public class StuffModule extends DiscordModule {
         for (String arg : args) {
             if (arg.equals("mai") || arg.equals("май") || arg.equals("маю") || arg.equals("мая")) {
                 event.getJDA().getUserById("154437997989855232").openPrivateChannel().queue(privateChannel -> {
-                    privateChannel.sendMessage("Mentioned " + event.getMessage().getJumpUrl()).queue();
+                    privateChannel.sendMessage("Mentioned "
+                                    + event.getMessage().getJumpUrl()
+                                    + " with text: "
+                                    + event.getMessage().getContentRaw())
+                            .queue();
                 }, throwable -> {
                     System.out.println(throwable.getMessage());
                 });
