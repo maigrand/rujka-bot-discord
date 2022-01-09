@@ -1,9 +1,11 @@
 package com.maigrand.rujka.service.discord;
 
 import com.maigrand.rujka.entity.discord.MonitoringEntity;
+import com.maigrand.rujka.payload.PaginationDetails;
 import com.maigrand.rujka.payload.discord.MonitoringDetails;
 import com.maigrand.rujka.repository.discord.MonitoringRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +22,10 @@ public class MonitoringService {
         return this.monitoringRepository.findAll();
     }
 
+    public PaginationDetails<MonitoringEntity> findAll(Pageable pageable) {
+        return new PaginationDetails<>(monitoringRepository.findAll(pageable));
+    }
+
     public List<MonitoringEntity> findByGuildId(String id) {
         return this.monitoringRepository.findByGuildId(id);
     }
@@ -33,15 +39,19 @@ public class MonitoringService {
                 .orElse(null);
     }
 
+    public int countAll() {
+        return this.monitoringRepository.countAll();
+    }
+
     public MonitoringEntity save(MonitoringDetails details) {
         MonitoringEntity monitoringEntity = new MonitoringEntity();
         monitoringEntity.setGuildId(details.getGuildId());
         monitoringEntity.setChannelId(details.getChannelId());
-        monitoringEntity.setMessageId(details.getMessageId());
         monitoringEntity.setServerAddress(details.getServerAddress());
         monitoringEntity.setServerName(details.getServerName());
         monitoringEntity.setServerPassword(details.getServerPassword());
         monitoringEntity.setServerIndex(details.getServerIndex());
+        //todo: добавить кучу проверок
 
         return this.monitoringRepository.save(monitoringEntity);
     }

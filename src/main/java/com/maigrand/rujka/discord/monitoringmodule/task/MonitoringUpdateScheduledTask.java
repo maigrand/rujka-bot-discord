@@ -1,6 +1,7 @@
 package com.maigrand.rujka.discord.monitoringmodule.task;
 
 import com.maigrand.rujka.discord.monitoringmodule.util.MonitoringMessageUtil;
+import com.maigrand.rujka.entity.discord.MonitoringEntity;
 import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.MonitoringService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +23,10 @@ public class MonitoringUpdateScheduledTask {
 
     private final JdaService jdaService;
 
+    private int countAll;
+
+    private List<MonitoringEntity> monitoringEntityList;
+
     @Scheduled(cron = "0 0/1 * * * ?", zone = "Europe/Moscow")
     //@Scheduled(fixedRate = 10000)
     private void execute() {
@@ -28,7 +35,12 @@ public class MonitoringUpdateScheduledTask {
         }
 
         //todo: optimize
-        monitoringService.findAll().parallelStream()
+        int cnt = monitoringService.countAll();
+        if (countAll != cnt) {
+            countAll = cnt;
+            monitoringEntityList = monitoringService.findAll();
+        }
+        monitoringEntityList.parallelStream()
                 .forEach(ent -> {
                     Guild guildById = jda.getGuildById(ent.getGuildId());
                     if (guildById == null) {
