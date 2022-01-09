@@ -58,13 +58,18 @@ public class MonitoringMessageUtil {
             return;
         }
 
+        String players = getPlayersField(statusNet).get("value");
+        if (players.length() > 2000) {
+            players = players.substring(0, 2000);
+        }
+
         emb.setAuthor(getAuthor(statusNet));
         emb.setTitle(entity.getServerAddress());
         emb.addField("Map", getMapField(statusNet), true);
         emb.addField("Gametype", getGameTypeField(statusNet), true);
         emb.addField("Fraglimit", getVariables("fraglimit", statusNet), true);
         emb.addField("Timelimit", getVariables("timelimit", statusNet), true);
-        emb.addField(getPlayersField(statusNet).get("name"), getPlayersField(statusNet).get("value"), false);
+        emb.addField(getPlayersField(statusNet).get("name"), players, false);
         emb.setFooter(getFooter(entity.getServerAddress(), entity.getServerPassword()), null);
         emb.setTimestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()));
 
