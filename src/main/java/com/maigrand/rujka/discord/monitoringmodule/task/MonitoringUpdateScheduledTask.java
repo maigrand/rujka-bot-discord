@@ -23,7 +23,7 @@ public class MonitoringUpdateScheduledTask {
 
     private final JdaService jdaService;
 
-    private int countAll;
+    private long countAll;
 
     private List<MonitoringEntity> monitoringEntityList;
 
@@ -35,7 +35,7 @@ public class MonitoringUpdateScheduledTask {
         }
 
         //todo: optimize
-        int cnt = monitoringService.countAll();
+        long cnt = monitoringService.countAll();
         if (countAll != cnt) {
             countAll = cnt;
             monitoringEntityList = monitoringService.findAll();

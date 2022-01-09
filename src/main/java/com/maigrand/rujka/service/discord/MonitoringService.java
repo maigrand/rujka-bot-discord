@@ -39,8 +39,8 @@ public class MonitoringService {
                 .orElse(null);
     }
 
-    public int countAll() {
-        return this.monitoringRepository.countAll();
+    public long countAll() {
+        return this.monitoringRepository.count();
     }
 
     public MonitoringEntity save(MonitoringDetails details) {

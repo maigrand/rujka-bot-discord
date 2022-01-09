@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface MonitoringRepository extends JpaRepository<MonitoringEntity, Integer> {
 
-    int countAll();
-
     List<MonitoringEntity> findByChannelId(String channelId);
 
     Optional<MonitoringEntity> findByChannelIdAndServerName(String channelId, String serverName);
