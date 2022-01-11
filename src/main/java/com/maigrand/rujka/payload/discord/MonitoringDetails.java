@@ -11,8 +11,6 @@ public class MonitoringDetails {
 
     private String channelId;
 
-    private String messageId;
-
     private String serverAddress;
 
     private String serverName;
