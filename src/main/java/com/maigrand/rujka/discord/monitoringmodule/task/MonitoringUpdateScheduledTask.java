@@ -1,5 +1,6 @@
 package com.maigrand.rujka.discord.monitoringmodule.task;
 
+import com.maigrand.rujka.discord.NotifyModule;
 import com.maigrand.rujka.discord.monitoringmodule.util.MonitoringMessageUtil;
 import com.maigrand.rujka.entity.discord.MonitoringEntity;
 import com.maigrand.rujka.service.JdaService;
@@ -23,6 +24,8 @@ public class MonitoringUpdateScheduledTask {
 
     private final JdaService jdaService;
 
+    private final NotifyModule notifyModule;
+
     private long countAll;
 
     private List<MonitoringEntity> monitoringEntityList;
@@ -42,22 +45,26 @@ public class MonitoringUpdateScheduledTask {
         }
         monitoringEntityList.parallelStream()
                 .forEach(ent -> {
-                    Guild guildById = jda.getGuildById(ent.getGuildId());
-                    if (guildById == null) {
-                        return;
-                    }
-                    TextChannel textChannelById = guildById.getTextChannelById(ent.getChannelId());
-                    if (textChannelById == null) {
-                        return;
-                    }
+                    try {
+                        Guild guildById = jda.getGuildById(ent.getGuildId());
+                        if (guildById == null) {
+                            return;
+                        }
+                        TextChannel textChannelById = guildById.getTextChannelById(ent.getChannelId());
+                        if (textChannelById == null) {
+                            return;
+                        }
 
-                    textChannelById.retrieveMessageById(ent.getMessageId()).queue(msg -> {
-                        MonitoringMessageUtil monitoringMessageUtil = new MonitoringMessageUtil(ent);
-                        monitoringMessageUtil.update(msg);
-                    }, throwable -> {
-                        System.out.println(throwable.getMessage());
-                        System.out.println(guildById.getName() + " : " + textChannelById.getName() + " : " + ent.getServerName());
-                    });
+                        textChannelById.retrieveMessageById(ent.getMessageId()).queue(msg -> {
+                            MonitoringMessageUtil monitoringMessageUtil = new MonitoringMessageUtil(ent);
+                            monitoringMessageUtil.update(msg);
+                        }, throwable -> {
+                            System.out.println(throwable.getMessage());
+                            System.out.println(guildById.getName() + " : " + textChannelById.getName() + " : " + ent.getServerName());
+                        });
+                    } catch (Exception e) {
+                        notifyModule.sendMessage(e.getLocalizedMessage());
+                    }
                 });
     }
 }

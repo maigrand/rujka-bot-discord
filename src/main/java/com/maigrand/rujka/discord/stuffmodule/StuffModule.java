@@ -1,6 +1,7 @@
 package com.maigrand.rujka.discord.stuffmodule;
 
 import com.maigrand.rujka.discord.DiscordModule;
+import com.maigrand.rujka.discord.NotifyModule;
 import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import com.maigrand.rujka.service.JdaService;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class StuffModule extends DiscordModule {
 
-    public StuffModule(JdaService jdaService) {
+    private final NotifyModule notifyModule;
+
+    public StuffModule(JdaService jdaService, NotifyModule notifyModule) {
         super(jdaService);
+        this.notifyModule = notifyModule;
     }
 
     @Override
@@ -41,15 +45,10 @@ public class StuffModule extends DiscordModule {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         for (String arg : args) {
             if (arg.equals("mai") || arg.equals("май") || arg.equals("маю") || arg.equals("мая")) {
-                event.getJDA().getUserById("154437997989855232").openPrivateChannel().queue(privateChannel -> {
-                    privateChannel.sendMessage("Mentioned "
-                                    + event.getMessage().getJumpUrl()
-                                    + " with text: "
-                                    + event.getMessage().getContentRaw())
-                            .queue();
-                }, throwable -> {
-                    System.out.println(throwable.getMessage());
-                });
+                notifyModule.sendMessage("Mentioned "
+                        + event.getMessage().getJumpUrl()
+                        + " with text: "
+                        + event.getMessage().getContentRaw());
             }
         }
     }
