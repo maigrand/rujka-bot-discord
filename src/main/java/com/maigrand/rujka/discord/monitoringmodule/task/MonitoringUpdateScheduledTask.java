@@ -26,10 +26,6 @@ public class MonitoringUpdateScheduledTask {
 
     private final NotifyModule notifyModule;
 
-    private long countAll;
-
-    private List<MonitoringEntity> monitoringEntityList;
-
     @Scheduled(cron = "0 0/1 * * * ?", zone = "Europe/Moscow")
     //@Scheduled(fixedRate = 10000)
     private void execute() {
@@ -38,11 +34,7 @@ public class MonitoringUpdateScheduledTask {
         }
 
         //todo: optimize
-        long cnt = monitoringService.countAll();
-        if (countAll != cnt) {
-            countAll = cnt;
-            monitoringEntityList = monitoringService.findAll();
-        }
+        List<MonitoringEntity> monitoringEntityList = monitoringService.findAll();
         monitoringEntityList.parallelStream()
                 .forEach(ent -> {
                     try {
