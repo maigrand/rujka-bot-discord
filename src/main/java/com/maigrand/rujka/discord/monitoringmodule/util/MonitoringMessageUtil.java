@@ -59,8 +59,8 @@ public class MonitoringMessageUtil {
         }
 
         String players = getPlayersField(statusNet).get("value");
-        if (players.length() > 2000) {
-            players = players.substring(0, 2000);
+        if (players.length() > 1024) {
+            players = players.substring(0, 1020);
         }
 
         emb.setAuthor(getAuthor(statusNet));
@@ -147,6 +147,7 @@ public class MonitoringMessageUtil {
         return gameType;
     }
 
+    //todo: при ограничении 1024 укорачивать каждый никнейм, а не обрезать весь список
     private Map<String, String> getPlayersField(String statusNet) {
         Map<String, String> playersMap = new HashMap<>();
         String[] status = statusNet.split("\n");
