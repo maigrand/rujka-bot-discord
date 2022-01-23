@@ -35,7 +35,7 @@ public class MonitoringUpdateScheduledTask {
 
         //todo: optimize
         List<MonitoringEntity> monitoringEntityList = monitoringService.findAll();
-        monitoringEntityList.parallelStream()
+        monitoringEntityList
                 .forEach(ent -> {
                     try {
                         Guild guildById = jda.getGuildById(ent.getGuildId());
