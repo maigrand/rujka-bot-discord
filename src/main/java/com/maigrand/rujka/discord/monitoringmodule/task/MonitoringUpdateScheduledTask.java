@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
@@ -48,7 +49,7 @@ public class MonitoringUpdateScheduledTask {
                     return;
                 }
 
-                textChannelById.retrieveMessageById(ent.getMessageId()).queue(msg -> {
+                textChannelById.retrieveMessageById(ent.getMessageId()).delay(5, TimeUnit.SECONDS).queue(msg -> {
                     MonitoringMessageUtil monitoringMessageUtil = new MonitoringMessageUtil(ent);
                     monitoringMessageUtil.update(msg);
                 }, throwable -> {
