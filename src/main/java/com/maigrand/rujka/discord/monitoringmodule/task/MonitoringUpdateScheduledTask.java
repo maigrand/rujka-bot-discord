@@ -49,7 +49,7 @@ public class MonitoringUpdateScheduledTask {
                     return;
                 }
 
-                textChannelById.retrieveMessageById(ent.getMessageId()).delay(5, TimeUnit.SECONDS).queue(msg -> {
+                textChannelById.retrieveMessageById(ent.getMessageId()).delay(30, TimeUnit.SECONDS).queue(msg -> {
                     MonitoringMessageUtil monitoringMessageUtil = new MonitoringMessageUtil(ent);
                     monitoringMessageUtil.update(msg);
                 }, throwable -> {
