@@ -28,7 +28,7 @@ public class MonitoringUpdateScheduledTask {
 
     private final NotifyModule notifyModule;
 
-    @Scheduled(cron = "0 0/1 * * * ?", zone = "Europe/Moscow")
+    @Scheduled(cron = "0 0/4 * * * ?", zone = "Europe/Moscow")
     //@Scheduled(fixedRate = 10000)
     private void execute() {
         if (jda == null) {
