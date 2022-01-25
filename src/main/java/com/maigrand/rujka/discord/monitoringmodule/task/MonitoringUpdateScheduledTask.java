@@ -29,7 +29,7 @@ public class MonitoringUpdateScheduledTask {
 
     private final NotifyModule notifyModule;
 
-    @Scheduled(cron = "0 0/4 * * * ?", zone = "Europe/Moscow")
+    @Scheduled(cron = "0 0/5 * * * ?", zone = "Europe/Moscow")
     //@Scheduled(fixedRate = 10000)
     private void execute() {
         if (jda == null) {
@@ -56,7 +56,7 @@ public class MonitoringUpdateScheduledTask {
                     notifyModule.sendMessage(throwable.getLocalizedMessage());
                     log.warn("MonitoringUpdateScheduledTask: " + guildById.getName() + " : " + textChannelById.getName() + " : " + ent.getServerName());
                 });
-                Thread.sleep(5000);
+                Thread.sleep(30000);
             } catch (Exception e) {
                 notifyModule.sendMessage(e.getLocalizedMessage());
             }
