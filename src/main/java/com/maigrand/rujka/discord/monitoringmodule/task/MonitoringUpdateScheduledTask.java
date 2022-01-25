@@ -7,9 +7,10 @@ import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.MonitoringService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -29,8 +30,11 @@ public class MonitoringUpdateScheduledTask {
 
     private final NotifyModule notifyModule;
 
-    @Scheduled(cron = "0 0/5 * * * ?", zone = "Europe/Moscow")
-    //@Scheduled(fixedRate = 10000)
+    @Value("${app.discord.monitoring_update_task.sleep_in_ms}")
+    private Integer sleepInMs;
+
+    //@Scheduled(cron = "0 0/5 * * * ?", zone = "Europe/Moscow")
+    @Scheduled(fixedDelayString = "${app.discord.monitoring_update_task.fixed_delay_in_ms}", initialDelay = 5000)
     private void execute() {
         if (jda == null) {
             jda = jdaService.getJda();
@@ -56,7 +60,7 @@ public class MonitoringUpdateScheduledTask {
                     notifyModule.sendMessage(throwable.getLocalizedMessage());
                     log.warn("MonitoringUpdateScheduledTask: " + guildById.getName() + " : " + textChannelById.getName() + " : " + ent.getServerName());
                 });
-                Thread.sleep(30000);
+                Thread.sleep(sleepInMs);
             } catch (Exception e) {
                 notifyModule.sendMessage(e.getLocalizedMessage());
             }
