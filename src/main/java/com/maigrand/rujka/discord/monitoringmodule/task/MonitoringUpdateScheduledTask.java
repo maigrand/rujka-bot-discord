@@ -49,13 +49,14 @@ public class MonitoringUpdateScheduledTask {
                     return;
                 }
 
-                textChannelById.retrieveMessageById(ent.getMessageId()).delay(30, TimeUnit.SECONDS).queue(msg -> {
+                textChannelById.retrieveMessageById(ent.getMessageId()).queue(msg -> {
                     MonitoringMessageUtil monitoringMessageUtil = new MonitoringMessageUtil(ent);
                     monitoringMessageUtil.update(msg);
                 }, throwable -> {
                     notifyModule.sendMessage(throwable.getLocalizedMessage());
                     log.warn("MonitoringUpdateScheduledTask: " + guildById.getName() + " : " + textChannelById.getName() + " : " + ent.getServerName());
                 });
+                Thread.sleep(5000);
             } catch (Exception e) {
                 notifyModule.sendMessage(e.getLocalizedMessage());
             }
