@@ -5,7 +5,6 @@ import com.maigrand.rujka.discord.NotifyModule;
 import com.maigrand.rujka.discord.util.InfoEmbedUtil;
 import com.maigrand.rujka.service.JdaService;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -53,7 +52,7 @@ public class StuffModule extends DiscordModule {
         }
     }
 
-    @Override
+    /*@Override
     public void onButtonClick(@NotNull ButtonClickEvent event) {
         super.onButtonClick(event);
         if (event.getComponentId().equals("rcon")) {
@@ -80,5 +79,5 @@ public class StuffModule extends DiscordModule {
             event.getMessage().editMessageEmbeds(emb.build()).queue();
             event.deferEdit().queue();
         }
-    }
+    }*/
 }
