@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
@@ -54,7 +55,7 @@ public class MessageLoggingModule extends DiscordModule {
     public void onMessageDelete(@NotNull MessageDeleteEvent event) {
         super.onMessageDelete(event);
 
-        messageDelete(event);
+        messageDelete(event.getGuild(), event.getChannel().getId(), event.getMessageId());
     }
 
     @Override
@@ -62,6 +63,15 @@ public class MessageLoggingModule extends DiscordModule {
         super.onMessageUpdate(event);
 
         messageUpdate(event);
+    }
+
+    @Override
+    public void onMessageBulkDelete(@Nonnull MessageBulkDeleteEvent event) {
+        super.onMessageBulkDelete(event);
+
+        for (String messageId : event.getMessageIds()) {
+            messageDelete(event.getGuild(), event.getChannel().getId(), messageId);
+        }
     }
 
     private void messageSave(MessageReceivedEvent event) {
@@ -100,11 +110,11 @@ public class MessageLoggingModule extends DiscordModule {
         messageStoreService.save(ent);
     }
 
-    private void messageDelete(MessageDeleteEvent event) {
-        Guild guild = event.getGuild();
+    private void messageDelete(Guild guild, String channelId, String messageId) {
+//        Guild guild = event.getGuild();
         String guildId = guild.getId();
-        String channelId = event.getChannel().getId();
-        String messageId = event.getMessageId();
+//        String channelId = event.getChannel().getId();
+//        String messageId = event.getMessageId();
 
         MessageStoreEntity ent = messageStoreService
                 .findByGuildIdAndChannelIdAndMessageId(guildId, channelId, messageId);
