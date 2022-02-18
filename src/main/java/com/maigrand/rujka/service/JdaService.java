@@ -29,6 +29,7 @@ public class JdaService {
                 jdaBuilder.setChunkingFilter(ChunkingFilter.NONE);
                 jdaBuilder.disableIntents(GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MESSAGE_TYPING);
                 jdaBuilder.enableCache(CacheFlag.EMOTE);
+                jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS);
                 jdaBuilder.setLargeThreshold(50);
 
                 this.jda = jdaBuilder.build();
