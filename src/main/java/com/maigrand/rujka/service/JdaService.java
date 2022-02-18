@@ -24,7 +24,8 @@ public class JdaService {
             try {
                 JDABuilder jdaBuilder = JDABuilder.createLight(token);
                 jdaBuilder.disableCache(CacheFlag.ACTIVITY);
-                jdaBuilder.setMemberCachePolicy(MemberCachePolicy.ONLINE.or(MemberCachePolicy.OWNER));
+                //jdaBuilder.setMemberCachePolicy(MemberCachePolicy.ONLINE.or(MemberCachePolicy.OWNER));
+                jdaBuilder.setMemberCachePolicy(MemberCachePolicy.ALL);
                 jdaBuilder.setChunkingFilter(ChunkingFilter.NONE);
                 jdaBuilder.disableIntents(GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MESSAGE_TYPING);
                 jdaBuilder.enableCache(CacheFlag.EMOTE);
