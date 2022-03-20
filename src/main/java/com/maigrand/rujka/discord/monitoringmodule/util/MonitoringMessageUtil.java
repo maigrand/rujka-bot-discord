@@ -82,7 +82,7 @@ public class MonitoringMessageUtil {
         String mapField = getMapField(statusNet);
         String mapFileName = mapField.replaceAll("/", "") + ".jpg";
 
-        File mapThumbnail = getMapThumbnail(mapFileName);
+        /*File mapThumbnail = getMapThumbnail(mapFileName);
         if (mapThumbnail != null) {
             emb.setThumbnail("attachment://map.jpg");
             message.editMessageEmbeds(emb.build())
@@ -90,7 +90,7 @@ public class MonitoringMessageUtil {
                     .addFile(mapThumbnail, "map.jpg")
                     .queue();
             return;
-        }
+        }*/
 
         message.editMessageEmbeds(emb.build())
                 .retainFilesById(new ArrayList<>())
