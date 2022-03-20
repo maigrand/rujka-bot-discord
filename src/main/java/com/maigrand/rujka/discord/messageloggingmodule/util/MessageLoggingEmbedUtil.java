@@ -16,9 +16,9 @@ public class MessageLoggingEmbedUtil {
             String newText) {
         EmbedBuilder emb = new EmbedBuilder();
 
-        Member member = guild.getMemberById(entity.getUserId());
+        Member member = guild.retrieveMemberById(entity.getUserId()).complete();
         TextChannel textChannel = guild.getTextChannelById(entity.getChannelId());
-        emb.setAuthor(member == null ? "smth wrong" : member.getEffectiveName(), null, member == null ? null : member.getUser().getEffectiveAvatarUrl());
+        emb.setAuthor(member.getEffectiveName(), null, member.getUser().getEffectiveAvatarUrl());
         emb.setColor(new Color(255, 165, 0));
         emb.setTimestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()));
         emb.addField("Channel", textChannel.getAsMention(), false);
