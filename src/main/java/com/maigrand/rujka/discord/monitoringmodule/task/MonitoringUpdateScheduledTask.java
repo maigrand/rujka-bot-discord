@@ -7,20 +7,24 @@ import com.maigrand.rujka.service.JdaService;
 import com.maigrand.rujka.service.discord.MonitoringService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.InputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class MonitoringUpdateScheduledTask {
+
+    public static Map<String, String> MAP_URL_MAP;
 
     private JDA jda;
 
@@ -38,6 +42,14 @@ public class MonitoringUpdateScheduledTask {
     private void execute() {
         if (jda == null) {
             jda = jdaService.getJda();
+        }
+
+        if (MAP_URL_MAP == null) {
+            Yaml yaml = new Yaml();
+            InputStream inputStream = this.getClass()
+                    .getClassLoader()
+                    .getResourceAsStream("mapUrl.yaml");
+            MAP_URL_MAP = yaml.load(inputStream);
         }
 
         //todo: optimize

@@ -7,8 +7,12 @@ import com.maigrand.rujka.service.discord.MonitoringService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class MonitoringModule extends DiscordModule {

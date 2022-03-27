@@ -1,5 +1,6 @@
 package com.maigrand.rujka.discord.monitoringmodule.util;
 
+import com.maigrand.rujka.discord.monitoringmodule.task.MonitoringUpdateScheduledTask;
 import com.maigrand.rujka.discord.util.GetStatusNet;
 import com.maigrand.rujka.entity.discord.MonitoringEntity;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,9 +54,7 @@ public class MonitoringMessageUtil {
             emb.setFooter(footer);
             emb.setTimestamp(LocalDateTime.now().atZone(ZoneId.systemDefault()));
 
-            message.editMessageEmbeds(emb.build())
-                    .retainFilesById(new ArrayList<>())
-                    .queue();
+            message.editMessageEmbeds(emb.build()).queue();
             return;
         }
 
@@ -80,21 +80,13 @@ public class MonitoringMessageUtil {
         }
 
         String mapField = getMapField(statusNet);
-        String mapFileName = mapField.replaceAll("/", "") + ".jpg";
+        String mapImageUrl = MonitoringUpdateScheduledTask.MAP_URL_MAP.get(mapField);
+        if (mapImageUrl == null) {
+            mapImageUrl = MonitoringUpdateScheduledTask.MAP_URL_MAP.get("default");
+        }
+        emb.setThumbnail(mapImageUrl);
 
-        /*File mapThumbnail = getMapThumbnail(mapFileName);
-        if (mapThumbnail != null) {
-            emb.setThumbnail("attachment://map.jpg");
-            message.editMessageEmbeds(emb.build())
-                    .retainFilesById(new ArrayList<>())
-                    .addFile(mapThumbnail, "map.jpg")
-                    .queue();
-            return;
-        }*/
-
-        message.editMessageEmbeds(emb.build())
-                .retainFilesById(new ArrayList<>())
-                .queue();
+        message.editMessageEmbeds(emb.build()).queue();
     }
 
     private String getVariables(String var, String statusNet) {
